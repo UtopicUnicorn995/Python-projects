@@ -1,3 +1,3 @@
 # Python-projects
-Rock - Paper - Scissors
-Snake Game
+### Rock - Paper - Scissors
+### Snake Game
