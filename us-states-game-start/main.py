@@ -15,12 +15,6 @@ guessed_state = []
 game_is_over = False
 
 
-def get_mouse_click_coor(x, y):
-    print(x, y)
-
-
-turtle.onscreenclick(get_mouse_click_coor)
-
 while not game_is_over:
     answer_state = screen.textinput(
         title=f"{len(guessed_state)}/50 Guess the state",
