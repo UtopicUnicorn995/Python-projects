@@ -18,11 +18,9 @@ print(state_list)
 
 
 def remove_guessed_items():
-    for item in guessed_state:
-        state_list.remove(item)
-        print(state_list)
-        missing_states = pandas.DataFrame(state_list)
-        missing_states.to_csv("missed_states.csv")
+    [state_list.remove(state_item) for state_item in guessed_state]
+    missing_states = pandas.DataFrame(state_list)
+    missing_states.to_csv("missed_states.csv")
 
 
 while not game_is_over:
