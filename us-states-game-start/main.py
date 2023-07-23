@@ -14,18 +14,24 @@ state_list = data["state"].to_list()
 guessed_state = []
 game_is_over = False
 
-
-def get_mouse_click_coor(x, y):
-    print(x, y)
+print(state_list)
 
 
-turtle.onscreenclick(get_mouse_click_coor)
+def remove_guessed_items():
+    [state_list.remove(state_item) for state_item in guessed_state]
+    missing_states = pandas.DataFrame(state_list)
+    missing_states.to_csv("missed_states.csv")
+
 
 while not game_is_over:
     answer_state = screen.textinput(
         title=f"{len(guessed_state)}/50 Guess the state",
         prompt="What's another state's name?",
     ).title()
+
+    if answer_state == "Exit":
+        remove_guessed_items()
+        break
 
     def check_state(state):
         if len(guessed_state) != 50:
