@@ -1,7 +1,11 @@
 from tkinter import *
-import tkinter
 
-window = tkinter.Tk()
+
+def calculate():
+    result.config(text=f"{float(input.get()) * 1.609}km")
+
+
+window = Tk()
 
 window.title("Mile to Km Converter")
 window.minsize(width=180, height=100)
@@ -22,10 +26,6 @@ text.grid(column=0, row=1)
 
 result = Label(text="0")
 result.grid(column=1, row=1)
-
-
-def calculate():
-    result.config(text=int(input.get()) * 1.609)
 
 
 button = Button(text="Calculate", command=calculate)
