@@ -1,8 +1,24 @@
 from tkinter import *
+from tkinter import messsagebox
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 
+
 # ---------------------------- SAVE PASSWORD ------------------------------- #
+def save():
+    website = website_entry.get()
+    email = email_entry.get()
+    password = password_entry.get()
+
+    # messsagebox.showinfo(title="Title", message="Message")
+    t = Toplevel()
+
+    f = open("data.txt", "a")
+    f.write(f"{website} || {email} || {password}\n")
+    f.close()
+    website_entry.delete(0, "end")
+    password_entry.delete(0, "end")
+
 
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
@@ -34,7 +50,7 @@ password_entry.grid(column=1, row=3, sticky=(W, E))
 
 password_button = Button(text="Generate Password")
 password_button.grid(column=2, row=3, sticky=(W, E))
-add_button = Button(text="Add", width=36)
+add_button = Button(text="Add", width=36, command=save)
 add_button.grid(column=1, row=4, columnspan=2, sticky=(W, E))
 
 window.mainloop()
