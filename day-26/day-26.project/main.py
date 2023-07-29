@@ -11,15 +11,20 @@ data = pandas.read_csv("nato_phonetic_alphabet.csv")
 # phonetic_alphabet = pandas.DataFrame(data)
 
 # print(phonetic_alphabet)
-
-name = input("What is your name? ").upper()
-
+is_on = True
+while is_on:
+    name = input("What is your name? ").upper()
+    try:
+        phonetic_alphabets = {row.letter: row.code for (index, row) in data.iterrows()}
+        last = [phonetic_alphabets[name_letter] for name_letter in name]
+        is_on = False
+    except KeyError:
+        print("Sorry, only letters in the alphabet please.")
+    else:
+        print(last)
 # for index, row in phonetic_alphabet.iterrows():
 #     print(row[index])
 
-phonetic_alphabets = {row.letter: row.code for (index, row) in data.iterrows()}
-last = [phonetic_alphabets[name_letter] for name_letter in name]
-print(last)
 
 # # Loop through rows of a data frame
 # for index, row in student_data_frame.iterrows():
