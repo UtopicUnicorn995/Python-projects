@@ -1,2 +1,4 @@
 JoeMari || Christian@gmail.com || passowrd
 Raichu || Christian@gmail.com || Thunderbolt
+food || Christian@gmail.com || dool
+fod || ` || password

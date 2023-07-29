@@ -1,8 +1,7 @@
 from tkinter import *
-from tkinter import messsagebox
+from tkinter import messagebox
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
-
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def save():
@@ -10,8 +9,7 @@ def save():
     email = email_entry.get()
     password = password_entry.get()
 
-    # messsagebox.showinfo(title="Title", message="Message")
-    t = Toplevel()
+    messagebox.showinfo(title="Title", message="Adding complete")
 
     f = open("data.txt", "a")
     f.write(f"{website} || {email} || {password}\n")
