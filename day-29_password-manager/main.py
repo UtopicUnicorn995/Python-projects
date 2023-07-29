@@ -74,36 +74,36 @@ def generate_password():
     shuffle(password_list)
 
     password = "".join(password_list)
-    password_entry.delete(0, len(password))
+    password_entry.delete(0, END)
     password_entry.insert(0, password)
     pyperclip.copy(password)
 
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
-# def save():
-#     website = website_entry.get()
-#     email = email_entry.get()
-#     password = password_entry.get()
+def save():
+    website = website_entry.get()
+    email = email_entry.get()
+    password = password_entry.get()
 
-#     if len(email) < 1 or len(password) < 1:
-#         messagebox.showwarning(
-#             title="Warning!", message="Please complete the all the fields"
-#         )
-#         return
-#     else:
-#         is_okay = messagebox.askokcancel(
-#             title=website,
-#             message=f"These are the details entered: \nEmail: {email} \nPassword: {password} \nIs it okay to save?",
-#         )
-#         if is_okay:
-#             f = open("data.txt", "a")
-#             f.write(f"{website} || {email} || {password}\n")
-#             f.close()
-#             messagebox.showinfo(
-#                 title="Success!", message="You have successfully added a user!"
-#             )
-#     website_entry.delete(0, "end")
-#     password_entry.delete(0, "end")
+    if len(email) < 1 or len(password) < 1:
+        messagebox.showwarning(
+            title="Warning!", message="Please complete the all the fields"
+        )
+        return
+    else:
+        is_okay = messagebox.askokcancel(
+            title=website,
+            message=f"These are the details entered: \nEmail: {email} \nPassword: {password} \nIs it okay to save?",
+        )
+        if is_okay:
+            f = open("data.txt", "a")
+            f.write(f"{website} || {email} || {password}\n")
+            f.close()
+            messagebox.showinfo(
+                title="Success!", message="You have successfully added a user!"
+            )
+    website_entry.delete(0, "end")
+    password_entry.delete(0, "end")
 
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -136,7 +136,7 @@ password_entry.grid(column=1, row=3, sticky=(W, E))
 
 password_button = Button(text="Generate Password", command=generate_password)
 password_button.grid(column=2, row=3, sticky=(W, E))
-add_button = Button(text="Add", width=36)
+add_button = Button(text="Add", width=36, command=save)
 add_button.grid(column=1, row=4, columnspan=2, sticky=(W, E))
 
 window.mainloop()
