@@ -2,6 +2,31 @@ from tkinter import *
 from tkinter import messagebox
 from random import choice, randint, shuffle
 import pyperclip
+import json
+
+
+def find_password():
+    website = website_entry.get()
+    try:
+        with open("data.json", "r") as data_file:
+            data = json.load(data_file)
+    except FileNotFoundError:
+        messagebox.showerror(
+            title="Error",
+            message="No Data File Found",
+        )
+    else:
+        if website in data:
+            messagebox.showinfo(
+                title=website,
+                message=f"Email: {data[website]['email']}\n Password: {data[website]['password']}",
+            )
+        else:
+            messagebox.showerror(
+                title="Could not find credentials",
+                message=f"No detail for the {website} exist",
+            )
+
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 
@@ -74,36 +99,37 @@ def generate_password():
     shuffle(password_list)
 
     password = "".join(password_list)
-    password_entry.delete(0, len(password))
+    password_entry.delete(0, END)
     password_entry.insert(0, password)
     pyperclip.copy(password)
 
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
-# def save():
-#     website = website_entry.get()
-#     email = email_entry.get()
-#     password = password_entry.get()
+def save():
+    website = website_entry.get()
+    email = email_entry.get()
+    password = password_entry.get()
+    new_data = {website: {"email": email, "password": password}}
 
-#     if len(email) < 1 or len(password) < 1:
-#         messagebox.showwarning(
-#             title="Warning!", message="Please complete the all the fields"
-#         )
-#         return
-#     else:
-#         is_okay = messagebox.askokcancel(
-#             title=website,
-#             message=f"These are the details entered: \nEmail: {email} \nPassword: {password} \nIs it okay to save?",
-#         )
-#         if is_okay:
-#             f = open("data.txt", "a")
-#             f.write(f"{website} || {email} || {password}\n")
-#             f.close()
-#             messagebox.showinfo(
-#                 title="Success!", message="You have successfully added a user!"
-#             )
-#     website_entry.delete(0, "end")
-#     password_entry.delete(0, "end")
+    if len(email) < 1 or len(password) < 1:
+        messagebox.showwarning(
+            title="Warning!", message="Please complete the all the fields"
+        )
+        return
+    else:
+        try:
+            with open("data.json", "r") as data_file:
+                data = json.load(data_file)
+        except FileNotFoundError:
+            with open("data.json", "w") as data_file:
+                json.dump(new_data, data_file, indent=4)
+        else:
+            data.update(new_data)
+            with open("data.json", "w") as data_file:
+                json.dump(data, data_file, indent=4)
+        finally:
+            website_entry.delete(0, "end")
+            password_entry.delete(0, "end")
 
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -123,20 +149,21 @@ email_label.grid(column=0, row=2)
 password_label = Label(text="Password:")
 password_label.grid(column=0, row=3)
 
-
-website_entry = Entry(width=35)
-website_entry.grid(column=1, row=1, columnspan=2, sticky=(W, E))
+website_button = Button(text="Search", command=find_password)
+website_button.grid(column=2, row=1, sticky=(W, E))
+website_entry = Entry(width=20)
+website_entry.grid(column=1, row=1, sticky=(W, E))
 website_entry.focus
 email_entry = Entry(width=35)
 email_entry.grid(column=1, row=2, columnspan=2, sticky=(W, E))
 email_entry.insert(0, "Christian@gmail.com")
-password_entry = Entry(width=21)
+password_entry = Entry(width=20)
 password_entry.grid(column=1, row=3, sticky=(W, E))
 
 
 password_button = Button(text="Generate Password", command=generate_password)
 password_button.grid(column=2, row=3, sticky=(W, E))
-add_button = Button(text="Add", width=36)
+add_button = Button(text="Add", width=36, command=save)
 add_button.grid(column=1, row=4, columnspan=2, sticky=(W, E))
 
 window.mainloop()
