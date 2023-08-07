@@ -1,6 +1,7 @@
 import requests
 from datetime import datetime
 import smtplib
+import time
 
 my_email = "christianpy123@gmail.com"
 password = "sdclnpccssmamibh"
@@ -26,12 +27,8 @@ def is_close():
 
         
 def is_night():
-    if is_close():
-        if sunrise > time_now.hour or sunset < time_now.hour:
-            with smtplib.SMTP("smtp.gmail.com", 587) as connection:
-                connection.starttls()
-                connection.login(my_email, password)
-                connection.sendmail(from_addr=my_email, to_addrs="christian.degulacion@gmail.com", msg="Subject:Look at the sky\n\nThe ISS is visible right now.")
+    if sunrise >= time_now.hour or sunset <= time_now.hour:
+        return True
     else:
         return
 
@@ -56,4 +53,10 @@ time_now = datetime.now()
 # BONUS: run the code every 60 seconds.
 
 
-is_night()
+while True:
+    time.sleep(60)
+    if is_night() and is_close():
+        with smtplib.SMTP("smtp.gmail.com", 587) as connection:
+            connection.starttls()
+            connection.login(my_email, password)
+            connection.sendmail(from_addr=my_email, to_addrs="christian.degulacion@gmail.com", msg="Subject:Look at the sky\n\nThe ISS is visible right now.")
