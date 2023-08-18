@@ -5,7 +5,6 @@ account_sid = 'ACd4d9dd535ea5913fcb8171a5d5a38b74'
 auth_token = '58272d50c9b1679e6203e5747d315173'
 
 
-
 STOCK = "TSLA"
 COMPANY_NAME = "Tesla Inc"
 STOCKS_API_KEY = "7D0R55H7K2AXJHI7"
@@ -13,7 +12,7 @@ NEWS_API_KEY = '957405cb19fe4b27852d7b8a473f8061'
 
 stocks_parameters = {
     'function': "TIME_SERIES_DAILY",
-    'symbol': 'IBM',
+    'symbol': STOCK,
     'apikey': STOCKS_API_KEY
 }
 
@@ -37,7 +36,6 @@ for stock in stocks:
 
 result = ((closing_stocks[0] - closing_stocks[1]) / closing_stocks[1]) * 100
 
-result = -5
 
 def send_news(emoji):
     for single_news in news:
