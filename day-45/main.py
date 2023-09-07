@@ -1,15 +1,25 @@
 from bs4 import BeautifulSoup
 import lxml
+import requests
 
-with open("website.html", encoding="utf8") as html_file:
-    contents = html_file.read()
+response = requests.get("https://news.ycombinator.com/news")
 
-soup = BeautifulSoup(contents, "lxml")
-# html.parser does not work on all websites, use lxml
+yc_web_page = response.text
 
-print(soup.title.string)
-# <soup.title.title> Gets the element name
-# <soup.title.string> Gets the content of the elment
+soup = BeautifulSoup(yc_web_page, "html.parser")
+# print(soup.title)
 
-print(soup.prettify())
-# Adds indentations in the html content
+article_tag = soup.select_one(".titleline a")
+
+print(article_tag.getText())
+# getText()
+print(article_tag.text)
+# text
+print(article_tag.string)
+# .string
+# Results are the same
+
+article_link = article_tag.get("href")
+article_upvote = soup.find(name="span", id="score_37390184").string
+print(article_link)
+print(article_upvote)
