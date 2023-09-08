@@ -24,7 +24,7 @@ article_upvote = soup.find(name="span", class_="score").string
 print(article_link)
 print(article_upvote)
 
-articles = soup.select(".titleline a")
+articles = soup.select(".titleline a:first-child")
 
 article_text = []
 article_links = []
@@ -32,21 +32,30 @@ article_upvotes_score = []
 article_upvotes = [score.string for score in soup.find_all(name="span", class_="score")]
 
 for article in articles:
-    article_links.append(article.get("href"))
-    article_text.append(article.getText())
+    # article_links.append(article.get("href"))
+    # article_text.append(article.getText())
+    print(article)
 
 for upvote in article_upvotes:
     article_upvotes_score.append(int(upvote.split(" ")[0]))
 
 
-print(article_upvotes_score)
+# print(article_upvotes_score)
+# print(article_text)
+max = max(article_upvotes_score)
 
-max = 0
+# for num in range(len(article_upvotes_score)):
+#     if article_upvotes_score[num] > max:
+#         max = article_upvotes_score[num]
+#         index = num
+# for i in range(len(article_upvotes_score)):
+#     if article_upvotes_score[i] == max:
+#         print(article_upvotes_score[i])
+#         print(article_text[i])
+#         print(article_links[i])
+index = article_upvotes_score.index(max)
 
-for num in range(len(article_upvotes_score)):
-    if article_upvotes_score[num] > max:
-        max = article_upvotes_score[num]
-        index = num
-
-print(article_text[index])
-print(article_links[index])
+# print(index)
+# print(article_text[index])
+# print(article_text[index])
+# print(article_links[index])
